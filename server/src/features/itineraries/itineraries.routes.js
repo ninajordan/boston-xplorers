@@ -13,4 +13,8 @@ router.get('/view-itinerary/:id', itineraryController.viewItinerary);
 // POST /api/itinerary/create-itinerary
 router.post('/create-itinerary', validateItineraryCreation, itineraryController.createItinerary);
 
+// DELETE /api/itinerary/delete-itinerary
+router.delete('/delete-itinerary/:id', itineraryController.deleteItinerary);
+
+
 export default router;

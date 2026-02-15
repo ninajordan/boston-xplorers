@@ -26,6 +26,39 @@ export async function getAllItineraries() {
     return itineraries;
 }
 
+function formatDateYMD(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function generateDateRange(startDate, endDate) {
+    const dates = [];
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    while (start <= end) {
+        dates.push(new Date(start));
+        start.setDate(start.getDate() + 1);
+    }
+
+    return dates;
+}
+
+function generateHourSlots() {
+    const slots = []
+    for (let hour = 0; hour < 24; hour++) {
+        let hourString = String(hour);
+        if (hourString.length < 2) {
+            hourString = `0${hourString}`;
+        }
+        const timeString = `${hourString}:00`;
+        slots.push(timeString);
+    }
+    return slots;
+}
+
 export async function getItineraryById(itineraryId) {
     const db = getDatabase();
     const itinerary = await db.collection('itineraries').findOne({ itineraryID: itineraryId });
@@ -33,12 +66,75 @@ export async function getItineraryById(itineraryId) {
         return null;
     }
 
+    const slotData = [];
+    const startDate = itinerary.startDate;
+    const endDate = itinerary.endDate;
+
+    const dateRange = generateDateRange(startDate, endDate);
+    const hourlySlots = generateHourSlots();
+
+    const allItinerarySlots = await db.collection('itinerarySlots').find({itineraryID: itineraryId}).toArray();
+    const locationIDs = allItinerarySlots.map(slot => slot.cardID);
+    const uniqueLocationIDs = [... new Set(locationIDs)]
+
+    const locations = await db.collection('locations').find({ locationID: {$in: uniqueLocationIDs }}).toArray();
+
+    const slotMap = new Map();
+    allItinerarySlots.forEach( slot => {
+        const dateString = formatDateYMD(slot.slotDate);
+        const dateTimeKey = `${dateString}-${slot.slotTime}`;
+        slotMap.set(dateTimeKey, slot);
+    });
+
+    const locationMap = new Map();
+    locations.forEach( loc => {
+        locationMap.set(loc.locationID, loc);
+    });
+
+    dateRange.forEach(date => {
+        hourlySlots.forEach(slot => {
+
+            const slotKey = `${formatDateYMD(date)}-${slot}`;
+            const itinerarySlot = slotMap.get(slotKey);
+            if (itinerarySlot) {
+                const locID = itinerarySlot.cardID;
+                const loc = locationMap.get(locID);
+
+                const formattedSlot = {
+                    slotID: itinerarySlot.slotID,
+                    itineraryID: itinerary.itineraryID,
+                    location: {
+                        locationName: loc.locationName,
+                        locationDesc: loc.locationDescription,
+                        locationImage: loc.locationImage,
+                        timeToComplete: loc.timeToComplete,
+                        distToPT: loc.distanceToPublicTransport,
+                        category: loc.category,
+                        rating: loc.starRating,
+                        address: loc.address
+                    },
+                    slotDate: date,
+                    slotTime: slot
+                }
+                slotData.push(formattedSlot);
+            } else {
+                const formattedSlot = {
+                    slotID: null,
+                    itineraryID: itinerary.itineraryID,
+                    location: null,
+                    slotDate: date,
+                    slotTime: slot
+                }
+                slotData.push(formattedSlot);
+            }
+        });
+    });
     return {
         itineraryID: itinerary.itineraryID,
         itineraryName: itinerary.itineraryName,
         startDate: formatDate(itinerary.startDate),
         endDate: formatDate(itinerary.endDate),
-        slotData: [],
+        slotData: slotData,
     };
 }
 
@@ -55,4 +151,26 @@ export async function createItinerary({ itineraryName, startDate, endDate }) {
 
     await db.collection('itineraries').insertOne(newItinerary);
     return newItinerary;
+}
+
+export async function deleteItinerary({ itineraryID }) {
+    try{
+        const db = getDatabase();
+        const itinerary = await db.collection('itineraries').find({ itineraryID: itineraryID});
+
+        if (!itinerary) {
+            return {found: false, deleted: false}
+        }
+
+        const slotDeletion = await db.collection('itinerarySlots').deleteMany({ itineraryID: itineraryID });
+        const itineraryDeletion = await db.collection('itinerary').deleteOne({ itineraryID: itineraryID });
+        return {
+            found: true,
+            deleted: true,
+        }
+    } catch(error) {
+        console.log(`Error in deleting itinerary: ${error}`);
+        return {found: true, deleted: false};
+    }
+
 }
