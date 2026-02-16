@@ -35,7 +35,7 @@ export async function viewItinerary(req, res) {
 
         const itinerary = await itinerariesService.getItineraryById(id);
 
-        if (!itinerary) {
+        if (itinerary.status === 404) {
             return res.status(404).json({
                 error: 'itinerary not found',
                 itineraryID: id
@@ -87,16 +87,84 @@ export async function deleteItinerary(req, res) {
         const { id } = req.params;
         const deleted = await itinerariesService.deleteItinerary(id);
 
-        if (!deleted.found) {
+        if (deleted.status === 404) {
             res.status(404).json({error: true, message: 'itinerary not found'});
         }
 
-        if (deleted.error) {
+        if (deleted.status === 500) {
             res.status(500).json({error: true, message: 'error in deleting itinerary'});
         }
 
         res.status(200).json({error: false, message: 'itinerary deleted successfully'});
     } catch (error) {
         res.status(500).json({error: true, message: `Error in deleting itinerary: ${error}`});
+    }
+}
+
+/**
+ * POST /api/itinerary/save-itinerary
+ * Takes in Different Slot dates and times in corresponding to a particular location card for a given itinerary.
+ */
+export async function saveItinerary(req, res) {
+    try {
+        const { slotData, itineraryID } = req.body;
+        const updatedItinerary = await itinerariesService.saveItinerary({
+            slotData,
+            itineraryID
+        });
+
+        if (updatedItinerary.status == 404) {
+            return res.status(404).json({
+                message: 'itinerary not found',
+                itinerary: updatedItinerary
+            });
+        }
+
+        res.status(201).json({
+            message: 'itinerary created successfully',
+            itinerary: updatedItinerary
+        });
+    } catch (error) {
+        console.error('Error in saving itinerary with requested slots', error);
+        res.status(500).json({
+            message: `failure in saving itinerary: ${error}`,
+            error: true
+        })
+    }
+}
+
+/**
+ * DELETE /api/itinerary/remove-item/:id
+ * Allows deleting of a single slot from the itinerary.
+ */
+
+export async function deleteItem(req, res) {
+    try {
+        const { id } = req.params;
+        const deletedItem = await itinerariesService.deleteItem(id);
+
+        if (deletedItem.status == 404) {
+            return res.status(404).json({
+                error: true,
+                message: 'Requested Itinerary Item could not be found'
+            });
+        } 
+
+        if (deletedItem.status == 500) {
+            return res.status(500).json({
+                error: true,
+                message: `Error in deleting requested item: ${deletedItem.message}`
+            });
+        }
+
+        res.status(200).json({
+            error: false,
+            message: 'Successfully deleted requested itinerary item'
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: true,
+            message: `Error in deleting itinerary Item: ${error}`
+        });
     }
 }
