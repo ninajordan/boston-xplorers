@@ -3,6 +3,13 @@ function isValidDate(dateString) {
     return date instanceof Date && !isNaN(date);
 } 
 
+function isValidTime(timeString) {
+    // Matches "14:00" or "14:00:00"
+    const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$/;
+    return timeRegex.test(timeString);
+}
+
+
 export function validateItineraryCreation(req, res, next) {
     const {itineraryName, startDate, endDate } = req.body;
     const errors = [];
@@ -47,4 +54,59 @@ export function validateItineraryCreation(req, res, next) {
 
     next();
 
+}
+
+export function validateItinerarySlots( req, res, next ) {
+    const { slotData, itineraryID } = req.body;
+    const errors = [];
+
+    if ( !itineraryID ) {
+        errors.push('itinerary ID is required');
+    } else if ( typeof itineraryID != 'string' ) {
+        errors.push('itineraryID must be a string of format 00X');
+    } else if (itineraryID.trim().length === 0) {
+        errors.push('itineraryName cannot be empty');
+    }
+
+    if (!slotData) {
+        errors.push('slot data is required to save itinerary');
+    } else if (!Array.isArray(slotData)) {
+        errors.push('slot data must be an array of json requests');
+    } else if (slotData.length === 0) {
+        errors.push('slot data cannot be empty')
+    } else {
+        slotData.forEach(slot => {
+            const { slotDate, slotTime, cardID } = slot
+            if (!slotDate) {
+                errors.push('slotDate is required');
+            } else if (!isValidDate(slotDate)) {
+                errors.push('slotDate must be a valid date (e.g., "2026-02-06" or "February 06, 2026")');
+            }
+            
+            if (!slotTime) {
+                errors.push('slotTime is required');
+            } else if (!isValidTime(slotTime)) {
+                errors.push('slotTime must be a valid time (e.g., "00:00:00" or "00:00")');
+            }
+    
+            if (!cardID) {
+                errors.push('locationID is required');
+            } else if (typeof cardID != 'string') {
+                errors.push('locationID must be a string of format 00X');
+            } else if (cardID.trim().length === 0) {
+                errors.push('locationID cant be empty');
+            }
+        });
+    }
+
+
+    if (errors.length > 0) {
+        return res.status(400).json({
+            error: true,
+            message: 'Validation Failed',
+            errors: errors
+        });
+    }
+
+    next();
 }

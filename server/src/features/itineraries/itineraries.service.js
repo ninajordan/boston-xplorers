@@ -20,6 +20,24 @@ function formatDate(dateString) {
     return date.toLocaleDateString('en-US', options);
 }
 
+
+function normalizeTime(timeString) {
+    return timeString.substring(0, 5); // "14:00:00" -> "14:00"
+}
+
+function isDateInRange(date, startDate, endDate) {
+    const checkDate = new Date(date);
+    checkDate.setHours(0, 0, 0, 0);
+    
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    
+    const end = new Date(endDate);
+    end.setHours(0, 0, 0, 0);
+    
+    return checkDate >= start && checkDate <= end;
+}
+
 export async function getAllItineraries() {
     const db = getDatabase();
     const itineraries = await db.collection('itineraries').find({}).sort({ itineraryID: 1 }).toArray();
@@ -63,7 +81,10 @@ export async function getItineraryById(itineraryId) {
     const db = getDatabase();
     const itinerary = await db.collection('itineraries').findOne({ itineraryID: itineraryId });
     if (!itinerary) {
-        return null;
+        return {
+            status: 404,
+            message: 'itinerary not found'
+        };
     }
 
     const slotData = [];
@@ -130,6 +151,7 @@ export async function getItineraryById(itineraryId) {
         });
     });
     return {
+        status: 200,
         itineraryID: itinerary.itineraryID,
         itineraryName: itinerary.itineraryName,
         startDate: formatDate(itinerary.startDate),
@@ -143,6 +165,7 @@ export async function createItinerary({ itineraryName, startDate, endDate }) {
     const nextId = await getNextItineraryId();
 
     const newItinerary = {
+        status: 201,
         itineraryID: nextId,
         itineraryName: itineraryName,
         startDate: new Date(startDate),
@@ -159,18 +182,108 @@ export async function deleteItinerary({ itineraryID }) {
         const itinerary = await db.collection('itineraries').find({ itineraryID: itineraryID});
 
         if (!itinerary) {
-            return {found: false, deleted: false}
+            return {
+                status: 404,
+                message: 'itinerary not found'
+            };
         }
 
         const slotDeletion = await db.collection('itinerarySlots').deleteMany({ itineraryID: itineraryID });
         const itineraryDeletion = await db.collection('itinerary').deleteOne({ itineraryID: itineraryID });
         return {
-            found: true,
-            deleted: true,
+            status: 200,
+            message: 'successfully deleted itinerary'
         }
     } catch(error) {
         console.log(`Error in deleting itinerary: ${error}`);
-        return {found: true, deleted: false};
+        return {
+            status: 500,
+            message: `Error occured in deleting itinerary: ${error}`
+        }
     }
 
+}
+
+export async function saveItinerary({ slotData, itineraryID }) {
+    try {
+        const db = getDatabase();
+        const itinerary = await db.collection('itineraries').findOne({ itineraryID: itineraryID });
+
+        if ( !itinerary ) {
+            return {
+                status: 404,
+                message: 'Itinerary Not found'
+            };
+        }
+
+        let slotID = null;
+        const finalSlot = await db.collection('itinerarySlots').find({}).sort({ slotID: -1}).limit(1).toArray();
+        if (finalSlot.length === 0) {
+            slotID = 0;
+        } else {
+            slotID = parseInt(finalSlot[0].slotID, 10);
+        }
+        const slotsToAdd = [];
+        const errors = []
+        slotData.forEach(slot => {
+            slotID += 1;
+            const formattedID = slotID.toString().padStart(3, '0');
+            if (isDateInRange(slot.slotDate, itinerary.startDate, itinerary.endDate)) {
+                const formattedSlot = {
+                    slotID: formattedID,
+                    itineraryID: itineraryID,
+                    slotDate: new Date(slot.slotDate),
+                    slotTime: slot.slotTime,
+                    cardID: slot.cardID
+                }
+                slotsToAdd.push(formattedSlot);
+            } else {
+                errors.push({ error: true, message: `error in saving itinerary slot: ${slot.locationID}`});
+                slotID -= 1;
+            }
+        });
+
+        const saveError = await db.collection('itinerarySlots').insertMany(slotsToAdd);
+        const errorOccurred = errors.length > 0;
+        const error = saveError && errorOccurred;
+        return {
+            status: 201,
+            message: 'Successfully added slots and saved itinerary',
+            slotData: slotsToAdd,
+            slotsFailed: errors,
+            error: error
+        };
+    } catch (error) {
+        console.log(`Error in Saving Slots: ${error}`);
+        return {
+            status: 500,
+            message: `error in saving slots: ${error}`
+        };
+    }
+}
+
+export async function deleteItem({ id }) {
+    try {
+        const db = getDatabase();
+        const slot = await db.collection('itinerarySlots').findOne({ slotID: id });
+
+        if (!slot) {
+            return {
+                status: 404,
+                message: "Requested itinerary item not found"
+            }
+        }
+
+        const slotDeletion = await db.collection('itinerarySlots').deleteOne({ slotID: id });
+        return {
+            status: 200,
+            message: "Deleted Successfully"
+        };
+    } catch (error) {
+        console.log(`Error occured in deleting itinerary item: ${error}`);
+        return {
+            status: 500,
+            message: `Error occured in deleting itinerary item: ${error}`
+        };
+    }
 }
