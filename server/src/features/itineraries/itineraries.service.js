@@ -38,6 +38,38 @@ function isDateInRange(date, startDate, endDate) {
     return checkDate >= start && checkDate <= end;
 }
 
+
+function getDaysDifference(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = end - start;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+}
+
+function addDays(date, days) {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+function getDateOffset(oldDate, oldStartDate, newStartDate) {
+    const oldStart = new Date(oldStartDate);
+    oldStart.setHours(0, 0, 0, 0);
+    
+    const old = new Date(oldDate);
+    old.setHours(0, 0, 0, 0);
+    
+    const newStart = new Date(newStartDate);
+    newStart.setHours(0, 0, 0, 0);
+    
+    // Days from old start to old date
+    const daysFromStart = getDaysDifference(oldStart, old);
+    
+    // Add same number of days to new start
+    return addDays(newStart, daysFromStart);
+}
+
 export async function getAllItineraries() {
     const db = getDatabase();
     const itineraries = await db.collection('itineraries').find({}).sort({ itineraryID: 1 }).toArray();
@@ -285,5 +317,89 @@ export async function deleteItem({ id }) {
             status: 500,
             message: `Error occured in deleting itinerary item: ${error}`
         };
+    }
+}
+
+export async function copyItineraryToNew({ itineraryID, itineraryName, startDate }) {
+    try {
+        const db = getDatabase();
+        const sourceItinerary = await db.collection('itineraries').findOne({ itineraryID: itineraryID })
+
+        if (!sourceItinerary) {
+            return {
+                status: 404,
+                message: 'itinerary not found'
+            };
+        }
+
+         // Validate start date
+         if (!isValidDate(startDate)) {
+            return {
+                status: 400,
+                message: 'Invalid start date format'
+            };
+        }
+
+        // Calculate trip duration in days
+        const tripDuration = getDaysDifference(
+            sourceItinerary.startDate, 
+            sourceItinerary.endDate
+        );
+
+        // Calculate new end date
+        const newStartDate = new Date(startDate);
+        const newEndDate = addDays(newStartDate, tripDuration);
+
+        const tgtItineraryID = await getNextItineraryId();
+
+        let itinerarySlots = await db.collection('itinerarySlots').find({ itineraryID: itineraryID}).toArray();
+
+        const itinerary = {
+            itineraryID: tgtItineraryID,
+            itineraryName: itineraryName,
+            startDate: newStartDate,
+            endDate: newEndDate
+        };
+
+        let slotID = null;
+        const finalSlot = await db.collection('itinerarySlots').find({}).sort({ slotID: -1}).limit(1).toArray();
+        if (finalSlot.length === 0) {
+            slotID = 0;
+        } else {
+            slotID = parseInt(finalSlot[0].slotID, 10);
+        }
+        
+        const newSlots = []
+        itinerarySlots.forEach( slot => {
+            slotID += 1;
+            const formattedID = slotID.toString().padStart(3, '0');
+            const newSlotDate =  getDateOffset(
+                slot.slotDate,
+                sourceItinerary.startDate,
+                newStartDate
+            );
+
+            const updatedSlot = {
+                slotID: formattedID,
+                slotDate: newSlotDate,
+                slotTime: slot.slotTime,
+                cardID: slot.cardID,
+            };
+            newSlots.push(updatedSlot);
+
+        })
+        const inserted = await db.collection('itineraries').insertOne(itinerary);
+        const slotsInserted = await db.collection('itinerarySlots').insertMany(newSlots);
+        
+        return {
+            status: 201,
+            message: 'itinerary copied successfully',
+            itineraryID: tgtItineraryID
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            message: `Error in Copying: ${error}`
+        }
     }
 }

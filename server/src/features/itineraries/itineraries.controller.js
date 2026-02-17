@@ -168,3 +168,48 @@ export async function deleteItem(req, res) {
         });
     }
 }
+
+/**
+ * POST /api/itinerary/copy-itinerary/:id
+ * Allows copying a pre-existing itinerary entirely to a new itinerary. Only allows selecting start date to the user.
+ */
+
+export async function copyItinerary(req, res) {
+    try {
+        const { itineraryID, itineraryName, startDate } = req.body;
+        const copiedItinerary = await itinerariesService.copyItineraryToNew(itineraryID, itineraryName, startDate);
+
+        if (copiedItinerary.status == 404) {
+            res.status(404).json({
+                error: true,
+                message: `Requested itinerary to copy not found`
+            });
+        }
+
+        // Validate required fields
+        if (!itineraryName || !startDate) {
+                return res.status(400).json({
+                    error: 'Validation failed',
+                    details: ['itineraryName and startDate are required']
+                });
+        }
+
+        if (copiedItinerary.status == 500) {
+            res.status(500).json({
+                error: true,
+                message: `Error in copying itinerary: ${copiedItinerary.message}`
+            });
+        }
+
+        res.status(201).json({
+            error: false,
+            message: 'itinerary copied successfully',
+            itinerary: copiedItinerary
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: true,
+            message: `error in copying itinerary: ${error}`
+        });
+    }
+}

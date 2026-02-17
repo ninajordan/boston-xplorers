@@ -24,5 +24,8 @@ router.post('/save-itinerary', validateItinerarySlots, itineraryController.saveI
 // DELETE /api/itinerary/remove-item
 router.delete('/remove-item/:id', itineraryController.deleteItem);
 
+// POST /api/itinerary/copy-itinerary/:id
+router.post('/copy-itinerary', itineraryController.copyItinerary);
+
 
 export default router;
