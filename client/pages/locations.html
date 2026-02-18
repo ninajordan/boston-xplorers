@@ -1,1 +1,132 @@
 <!-- Locations page markup -->
+
+<body>
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR (you can keep empty for now if ignoring itineraries) -->
+    <aside class="sidebar">
+      <h2>Popular Itineraries</h2>
+      <div class="sidebar-placeholder">
+        <!-- ignore for now -->
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- Top bar: Search + Filters dropdown -->
+      <div class="topbar">
+        <input
+          id="locations-search"
+          type="text"
+          placeholder="Search locations, categories, or keywords..."
+        />
+
+        <div class="filters">
+          <button id="filters-toggle" type="button">Filters ▾</button>
+          <div id="filters-menu" class="filters-menu hidden">
+            <label>
+              Category
+              <select id="filter-category">
+                <option value="">All</option>
+                <option value="park">Park</option>
+                <option value="museum">Museum</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="education">Education</option>
+                <option value="landmark">Landmark</option>
+                <option value="historic">Historic</option>
+                <option value="waterfront">Waterfront</option>
+                <option value="hiking">Hiking</option>
+                <option value="miscellaneous">Misc</option>
+              </select>
+            </label>
+
+            <label>
+              Neighborhood
+              <input id="filter-neighborhood" type="text" placeholder="Back Bay..." />
+            </label>
+
+            <label>
+              Sort
+              <select id="filter-sort">
+                <option value="rating">Rating</option>
+                <option value="name">Name</option>
+                <option value="category">Category</option>
+                <option value="neighborhood">Neighborhood</option>
+              </select>
+            </label>
+
+            <label>
+              Order
+              <select id="filter-order">
+                <option value="desc">Desc</option>
+                <option value="asc">Asc</option>
+              </select>
+            </label>
+
+            <button id="filters-apply" type="button">Apply</button>
+            <button id="filters-clear" type="button">Clear</button>
+          </div>
+        </div>
+      </div>
+<!-- Locations page markup -->
+<div id="locations-container"></div>
+import { initLocationsPage } from "./js/features/locations/locations.page.js";
+initLocationsPage();
+      <!-- Category sections render here -->
+      <div id="locations-sections"></div>
+
+      <!-- Floating action buttons -->
+      <div class="fab">
+        <button id="btn-add-location" type="button">+ Add Location</button>
+        <a id="btn-go-itinerary" href="./itineraries.html">Go to Itinerary</a>
+      </div>
+    </main>
+  </div>
+
+  <!-- Details Modal -->
+  <div id="location-modal" class="modal hidden">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button id="modal-close" class="modal-close" type="button">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Add Location Modal -->
+  <div id="add-modal" class="modal hidden">
+    <div class="modal-backdrop" id="add-backdrop"></div>
+
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button id="add-close" class="modal-close" type="button">✕</button>
+
+      <h2>Add a Location</h2>
+      <form id="add-form">
+        <input name="locationID" placeholder="locationID (e.g. 101)" required />
+        <input name="locationName" placeholder="Location name" required />
+        <input name="address" placeholder="Address" required />
+        <select name="category" required>
+          <option value="">Select category</option>
+          <option value="park">Park</option>
+          <option value="museum">Museum</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="education">Education</option>
+          <option value="landmark">Landmark</option>
+          <option value="historic">Historic</option>
+          <option value="waterfront">Waterfront</option>
+          <option value="hiking">Hiking</option>
+          <option value="miscellaneous">Misc</option>
+        </select>
+
+        <input name="starRating" type="number" min="0" max="5" step="0.1" placeholder="Rating (0–5)" />
+        <input name="timeToComplete" type="number" step="30" placeholder="Time (minutes, multiples of 30)" />
+        <input name="neighborhood" placeholder="Neighborhood (optional)" />
+        <input name="locationImage" placeholder="Image URL (optional)" />
+        <textarea name="locationDescription" placeholder="Description" required></textarea>
+
+        <button type="submit">Create</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../js/features/locations/locations.page.js"></script>
+</body>
