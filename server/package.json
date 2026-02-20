@@ -5,7 +5,7 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node_modules/nodemon/bin/nodemon.js server.js",
+    "start": "node src/server.js",
     "db:setup": "node src/db/setup.js",
     "dev": "node_modules/nodemon/bin/nodemon.js server.js"
   },
@@ -13,7 +13,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^17.2.4",
-    "express": "^5.2.1"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
