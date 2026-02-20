@@ -31,8 +31,15 @@ function normalizeTime(timeString) {
 }
 
 function isDateInRange(date, startDate, endDate) {
-    const checkDate = new Date(date);
-    checkDate.setHours(0, 0, 0, 0);
+
+    let checkDate;
+    if (typeof date === 'string') {
+        // Parse as local date to avoid timezone issues
+        const parts = date.split('-').map(Number);
+        checkDate = new Date(parts[0], parts[1] - 1, parts[2]);
+    } else {
+        checkDate = new Date(date);
+    }
     
     const start = new Date(startDate);
     start.setHours(0, 0, 0, 0);
@@ -255,21 +262,32 @@ export async function saveItinerary({ slotData, itineraryID }) {
         slotData.forEach(slot => {
             slotID += 1;
             const formattedID = slotID.toString().padStart(3, '0');
+            console.log(`Checking slot date: ${slot.slotDate}`);
+            
             if (isDateInRange(slot.slotDate, itinerary.startDate, itinerary.endDate)) {
+                // FIX: Parse date string as local date, not UTC
+                const [year, month, day] = slot.slotDate.split('-').map(Number);
+                const localDate = new Date(year, month - 1, day);
+                localDate.setHours(12, 0, 0, 0); // Use noon to avoid any timezone issues
+                
                 const formattedSlot = {
                     slotID: formattedID,
                     itineraryID: itineraryID,
-                    slotDate: new Date(slot.slotDate),
+                    slotDate: localDate, // Now correctly saved
                     slotTime: slot.slotTime,
-                    cardID: slot.cardID
-                }
+                    cardID: slot.locationID
+                };
                 slotsToAdd.push(formattedSlot);
             } else {
-                errors.push({ error: true, message: `error in saving itinerary slot: ${slot.locationID}`});
+                errors.push({ error: true, message: `Date ${slot.slotDate} is outside itinerary range`});
                 slotID -= 1;
             }
         });
 
+        console.log(`Slots to Add: ${slotsToAdd}`);
+        errors.forEach(err => {
+            console.log("Error: ", err.message);
+        })
         const saveError = await db.collection('itinerarySlots').insertMany(slotsToAdd);
         const errorOccurred = errors.length > 0;
         const error = saveError && errorOccurred;
@@ -390,7 +408,7 @@ export async function copyItineraryToNew(itineraryID, itineraryName, startDate) 
         if (newSlots.length > 0) {
             slotsInserted = await db.collection('itinerarySlots').insertMany(newSlots);
         }
-        
+        console.log(`Copy Successful. New itinerary ID: ${tgtItineraryID}`);
         return {
             status: 201,
             message: 'itinerary copied successfully',

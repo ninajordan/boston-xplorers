@@ -76,7 +76,7 @@ export function validateItinerarySlots( req, res, next ) {
         errors.push('slot data cannot be empty')
     } else {
         slotData.forEach(slot => {
-            const { slotDate, slotTime, cardID } = slot
+            const { slotDate, slotTime, locationID } = slot
             if (!slotDate) {
                 errors.push('slotDate is required');
             } else if (!isValidDate(slotDate)) {
@@ -89,11 +89,11 @@ export function validateItinerarySlots( req, res, next ) {
                 errors.push('slotTime must be a valid time (e.g., "00:00:00" or "00:00")');
             }
     
-            if (!cardID) {
+            if (!locationID) {
                 errors.push('locationID is required');
-            } else if (typeof cardID != 'string') {
+            } else if (typeof locationID != 'string') {
                 errors.push('locationID must be a string of format 00X');
-            } else if (cardID.trim().length === 0) {
+            } else if (locationID.trim().length === 0) {
                 errors.push('locationID cant be empty');
             }
         });

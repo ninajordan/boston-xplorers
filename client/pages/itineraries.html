@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boston Xplorers - Itinerary</title>
+    
+    <link rel="stylesheet" href="../css/modules/layout.css">
+    <link rel="stylesheet" href="../css/modules/cards.css">
+    <link rel="stylesheet" href="../css/modules/itinerary.css">
+</head>
+<body>
+    <main class="itinerary-page">
+        <aside class="locations-sidebar">
+            <!-- Back to Homepage Button -->
+            <button class="back-to-home-btn" onclick="window.location.href='locations.html'">
+                ← Locations Homepage
+            </button>
+            
+            <div class="sidebar-header">
+                <h2>Available Locations</h2>
+                <input 
+                    type="text" 
+                    id="location-search" 
+                    class="search-input" 
+                    placeholder="Search locations..."
+                >
+            </div>
+            <div id="locations-list" class="locations-list">
+                <div class="loading">Loading locations...</div>
+            </div>
+        </aside>
+
+        <section class="itinerary-container">
+            <div class="itinerary-header">
+                <input 
+                    type="text" 
+                    id="itinerary-name" 
+                    class="itinerary-name-input" 
+                    placeholder="Enter itinerary name..."
+                    readonly
+                >
+                <button id="copy-itinerary-btn" class="copy-itinerary-btn" title="Copy this itinerary">
+                    📋
+                </button>
+            </div>
+
+            <div class="date-navigation">
+                <button id="prev-day" class="date-nav-btn">◀</button>
+                <h3 id="current-date" class="current-date">February 12th 2026</h3>
+                <button id="next-day" class="date-nav-btn">▶</button>
+            </div>
+
+            <div class="itinerary-timeline" id="itinerary-timeline">
+            </div>
+
+            <div class="itinerary-footer">
+                <button id="save-itinerary-btn" class="save-itinerary-btn">
+                    Save Itinerary
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <div id="location-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal">&times;</button>
+            <div id="location-detail">
+            </div>
+        </div>
+    </div>
+
+    <div id="copy-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-form">
+            <button class="modal-close" id="close-copy-modal">&times;</button>
+            <div class="copy-form">
+                <h2 class="copy-form-title">Copy Itinerary</h2>
+                <p class="copy-form-description">Create a copy of this itinerary with a new start date</p>
+                
+                <div class="form-group">
+                    <label for="copy-itinerary-name">Itinerary Name</label>
+                    <input 
+                        type="text" 
+                        id="copy-itinerary-name" 
+                        class="form-input" 
+                        placeholder="Enter new itinerary name"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="copy-start-date">Start Date</label>
+                    <input 
+                        type="date" 
+                        id="copy-start-date" 
+                        class="form-input" 
+                        required
+                    >
+                </div>
+                
+                <button 
+                    type="button" 
+                    id="copy-submit-btn" 
+                    class="btn-primary copy-submit-btn"
+                    onclick="window.handleCopyClick()"
+                >
+                    Copy Itinerary
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../js/features/itineraries/itineraries.page.js"></script>
+</body>
+</html>
