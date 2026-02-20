@@ -30,8 +30,8 @@
         </button>
 
         <!-- Sidebar Go to Itinerary button -->
-        <button id="btn-go-itinerary" class="sidebar-btn primary" href="./itineraries.html">
-          Go to Itinerary
+        <button id="btn-add-itinerary" class="sidebar-btn primary" type="button">
+          + Add Itinerary
         </button>
 
         <!-- Collapsible Add Location panel -->
@@ -152,6 +152,57 @@
     </div>
   </div>
 
+    <div id="add-itinerary-modal" class="modal hidden">
+        <div class="modal-backdrop" id="itinerary-modal-backdrop"></div>
+        <div class="modal-content modal-form" role="dialog" aria-modal="true">
+          <button id="itinerary-modal-close" class="modal-close" type="button">✕</button>
+          <div class="add-itinerary-form">
+            <h2 class="panel-title">Create New Itinerary</h2>
+            <p class="form-description">Plan your perfect Boston adventure</p>
+            
+            <form id="add-itinerary-form" class="add-form">
+              <div class="form-group">
+                <label for="itinerary-name-input">Itinerary Name</label>
+                <input 
+                  type="text" 
+                  id="itinerary-name-input" 
+                  name="itineraryName" 
+                  class="form-input" 
+                  placeholder="e.g., Weekend in Boston"
+                  required
+                />
+              </div>
+              
+              <div class="form-group">
+                <label for="itinerary-start-date">Start Date</label>
+                <input 
+                  type="date" 
+                  id="itinerary-start-date" 
+                  name="startDate" 
+                  class="form-input" 
+                  required
+                />
+              </div>
+              
+              <div class="form-group">
+                <label for="itinerary-end-date">End Date</label>
+                <input 
+                  type="date" 
+                  id="itinerary-end-date" 
+                  name="endDate" 
+                  class="form-input" 
+                  required
+                />
+              </div>
+    
+              <div class="panel-actions">
+                <button type="submit" class="sidebar-btn primary">Create Itinerary</button>
+                <button id="itinerary-cancel" type="button" class="sidebar-btn ghost">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
   <script type="module" src="js/features/locations/locations.page.js"></script>
 </body>

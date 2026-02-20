@@ -339,3 +339,92 @@
   .sidebar-actions a.sidebar-btn:active {
     transform: translateY(0px) scale(0.99);
   }
+
+.modal-form {
+  max-width: 500px;
+  padding: 0;
+}
+
+.add-itinerary-form {
+  padding: 30px;
+}
+
+.form-description {
+  font-size: 14px;
+  color: #6C757D;
+  margin: 0 0 25px 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0C2340;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  color: #111aaa;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #C8102E;
+}
+
+.form-input::placeholder {
+  color: #111aaa;
+}
+
+/* Override sidebar-btn styles when in modal */
+.add-itinerary-form .sidebar-btn.primary {
+  background: #C8102E;
+  color: white;
+  border: none;
+}
+
+.add-itinerary-form .sidebar-btn.primary:hover {
+  background: #9B0C23;
+  transform: translateY(-1px);
+}
+
+.add-itinerary-form .sidebar-btn.ghost {
+  background: transparent;
+  border: 1px solid #dee2e6;
+  color: #6C757D;
+}
+
+.add-itinerary-form .sidebar-btn.ghost:hover {
+  background: #F8F9FA;
+}
+
+.add-itinerary-form .form-input,
+.add-itinerary-form input,
+.add-itinerary-form select,
+.add-itinerary-form textarea {
+    color: #1A1A1A !important;  /* Dark text for white background */
+    background: white !important;
+    border: 2px solid #dee2e6 !important;
+}
+
+.add-itinerary-form input::placeholder,
+.add-itinerary-form textarea::placeholder {
+    color: #6C757D !important;
+}
+
+.add-itinerary-form input:focus,
+.add-itinerary-form select:focus,
+.add-itinerary-form textarea:focus {
+    border-color: #C8102E !important;
+}

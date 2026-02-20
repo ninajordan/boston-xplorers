@@ -18,6 +18,16 @@ async function browseItineraries() {
   return res.json();
 }
 
+async function createItinerary(itineraryName, startDate, endDate) {
+  const res = await fetch(`${ITINERARY_BASE_URL}/create-itinerary`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ itineraryName, startDate, endDate })
+  });
+  if (!res.ok) throw new Error(`Failed to create itinerary: ${res.status}`);
+  return res.json();
+}
+
 async function viewItinerary(itineraryID) {
   const res = await fetch(`${ITINERARY_BASE_URL}/view-itinerary/${encodeURIComponent(itineraryID)}`);
   if (!res.ok) throw new Error(`Failed to view itinerary ${itineraryID}: ${res.status}`);
@@ -299,6 +309,98 @@ function wireModalClose() {
   $("#modal-backdrop")?.addEventListener("click", () => closeModal(modalEl));
 }
 
+function wireAddItineraryModal() {
+  const modal = $("#add-itinerary-modal");
+  const btn = $("#btn-add-itinerary");
+  const cancelBtn = $("#itinerary-cancel");
+  const closeBtn = $("#itinerary-modal-close");
+  const backdrop = $("#itinerary-modal-backdrop");
+  const form = $("#add-itinerary-form");
+  
+  const openItineraryModal = () => {
+    if (modal) {
+      modal.classList.remove("hidden");
+      
+      // Set min date to today
+      const today = new Date().toISOString().split('T')[0];
+      const startInput = $("#itinerary-start-date");
+      const endInput = $("#itinerary-end-date");
+      
+      if (startInput) {
+        startInput.min = today;
+        startInput.value = today;
+      }
+      
+      if (endInput) {
+        endInput.min = today;
+      }
+    }
+  };
+  
+  const closeItineraryModal = () => {
+    modal?.classList.add("hidden");
+    form?.reset();
+  };
+  
+  btn?.addEventListener("click", openItineraryModal);
+  cancelBtn?.addEventListener("click", closeItineraryModal);
+  closeBtn?.addEventListener("click", closeItineraryModal);
+  backdrop?.addEventListener("click", closeItineraryModal);
+  
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const itineraryName = formData.get('itineraryName');
+    const startDate = formData.get('startDate');
+    const endDate = formData.get('endDate');
+    
+    // Validate dates
+    if (new Date(endDate) < new Date(startDate)) {
+      alert('End date must be after or equal to start date');
+      return;
+    }
+    
+    try {
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creating...';
+      
+      const result = await createItinerary(itineraryName, startDate, endDate);
+      
+      console.log('Itinerary created:', result);
+      
+      // Close modal
+      closeItineraryModal();
+      
+      // Refresh sidebar itineraries
+      await loadSidebarItineraries();
+      
+      
+    } catch (err) {
+      console.error("Create itinerary failed:", err);
+      alert("Could not create itinerary. Check console for details.");
+      
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create Itinerary';
+    }
+  });
+  
+  // Update end date min when start date changes
+  const startInput = $("#itinerary-start-date");
+  const endInput = $("#itinerary-end-date");
+  
+  startInput?.addEventListener("change", () => {
+    if (endInput) {
+      endInput.min = startInput.value;
+      if (endInput.value && endInput.value < startInput.value) {
+        endInput.value = startInput.value;
+      }
+    }
+  });
+}
+
 export function initLocationsPage() {
   function wireAddLocationPanel() {
     const panel = $("#add-panel");
@@ -349,6 +451,7 @@ export function initLocationsPage() {
     });
   }
   wireModalClose();
+  wireAddItineraryModal();
   loadSidebarItineraries();
   wireAddLocationPanel();
   const searchEl = $("#filter-search") || $("#search");
