@@ -1,326 +1,344 @@
-.layout{
-    display:grid;
-    grid-template-columns: 240px 1fr;
-    min-height:100vh;
-  }
-  
-  .sidebar{
-    background:#0f2c47;
-    color:white;
-    padding:18px 14px;
-  }
-  
-  .sidebar a{
-    display:block;
-    color:#dbe7f3;
-    text-decoration:none;
-    padding:10px 8px;
-    border-radius:8px;
-  }
-  .sidebar a:hover{ background: rgba(255,255,255,0.08); }
-  
-  .main{
-    background:#eef1f6;
-    padding:18px;
-  }
-  
-  .controls{
-    display:flex;
-    gap:12px;
-    align-items:center;
-    margin-bottom:14px;
-  }
-  
-  .controls input{
-    flex:1;
-    padding:12px 14px;
-    border-radius:10px;
-    border:1px solid #cfd6e3;
-    font-size:16px;
-  }
-  
-  .controls select{
-    padding:10px 12px;
-    border-radius:10px;
-    border:1px solid #cfd6e3;
-    background:white;
-  }
-  
-  .section h2{
-    margin:14px 0 10px;
-    color:#a01f2a; /* USA colors */
-    letter-spacing:0.5px;
-  }
-  
-  .card-grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap:14px;
-  }
-  
-  .card{
-    background:white;
-    border-radius:12px;
-    overflow:hidden;
-    border:1px solid #d6dde8;
-    box-shadow:0 1px 4px rgba(0,0,0,0.06);
-  }
-  
-  .card .card-title{
-    background:#b11d2a;
-    color:white;
-    padding:10px 12px;
-    font-weight:700;
-  }
-  
-  .card .card-body{ padding:12px; color:#2a2f38; }
-  /* --- SECTION LAYOUT (category row) --- */
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #0f2c47;
+  color: white;
+  padding: 18px 14px;
+}
+
+.sidebar a {
+  display: block;
+  color: #dbe7f3;
+  text-decoration: none;
+  padding: 10px 8px;
+  border-radius: 8px;
+}
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.main {
+  background: #eef1f6;
+  padding: 18px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.controls input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cfd6e3;
+  font-size: 16px;
+}
+
+.controls select {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cfd6e3;
+  background: white;
+}
+
+.section h2 {
+  margin: 14px 0 10px;
+  color: #a01f2a; /* USA colors */
+  letter-spacing: 0.5px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #d6dde8;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.card .card-title {
+  background: #b11d2a;
+  color: white;
+  padding: 10px 12px;
+  font-weight: 700;
+}
+
+.card .card-body {
+  padding: 12px;
+  color: #2a2f38;
+}
+/* --- SECTION LAYOUT (category row) --- */
 .location-section {
-    margin: 18px 0 26px;
-  }
-  
-  .section-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 6px 0 10px;
-  }
-  
-  .section-header h3{
-    margin: 0;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-  }
-  
-  /* row that holds multiple cards */
-  .card-row{
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    padding: 8px 2px 14px;
-    scroll-snap-type: x mandatory;
-  }
-  
-  /*  scrolling */
-  .card-row::-webkit-scrollbar { height: 10px; }
-  .card-row::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
-  .card-row::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 10px; }
-  
-  /* --- CARD --- */
-  .location-card{
-    flex: 0 0 240px;          
-    background: #fff;
-    border: 1px solid rgba(0,0,0,0.10);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    cursor: pointer;
-    scroll-snap-align: start;
-  }
-  
+  margin: 18px 0 26px;
+}
 
-  .location-card .card-title{
-    background: #b11d2a;      
-    color: #fff;
-    padding: 10px 12px;
-    font-weight: 800;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* Image area */
-  .location-card .card-image{
-    height: 120px;            /* prevents huge images */
-    background: #eee;
-  }
-  
-  .location-card .card-image img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;        /* crop instead of straining quiality*/
-    display: block;
-  }
-  
-  .location-card .img-placeholder{
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.12));
-  }
-  
-  /* Body */
-  .location-card .card-body{
-    padding: 10px 12px 12px;
-  }
-  
-  .location-card .card-desc{
-    font-size: 13px;
-    line-height: 1.25;
-    color: rgba(0,0,0,0.75);
-    min-height: 32px;
-    margin-bottom: 10px;
-  
-    display: -webkit-box;
-    -webkit-line-clamp: 2;      
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  .location-card .card-meta{
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    font-size: 12px;
-    color: rgba(0,0,0,0.65);
-    margin-bottom: 8px;
-  }
-  
-  .location-card .card-address{
-    font-size: 12px;
-    color: rgba(0,0,0,0.65);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /*smaller Prev/Next */
-  .section-controls button{
-    padding: 6px 10px;
-    border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.18);
-    background: #fff;
-    cursor: pointer;
-  }
-  .location-card { cursor: pointer; transition: transform 160ms ease, box-shadow 160ms ease; }
-.location-card:hover { transform: translateY(-2px); }
-.location-card:active { transform: scale(0.98); }
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0 10px;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* row that holds multiple cards */
+.card-row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 8px 2px 14px;
+  scroll-snap-type: x mandatory;
+}
+
+/*  scrolling */
+.card-row::-webkit-scrollbar {
+  height: 10px;
+}
+.card-row::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+.card-row::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+/* --- CARD --- */
+.location-card {
+  flex: 0 0 240px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+
+.location-card .card-title {
+  background: #b11d2a;
+  color: #fff;
+  padding: 10px 12px;
+  font-weight: 800;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Image area */
+.location-card .card-image {
+  height: 120px; /* prevents huge images */
+  background: #eee;
+}
+
+.location-card .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* crop instead of straining quiality*/
+  display: block;
+}
+
+.location-card .img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.12));
+}
+
+/* Body */
+.location-card .card-body {
+  padding: 10px 12px 12px;
+}
+
+.location-card .card-desc {
+  font-size: 13px;
+  line-height: 1.25;
+  color: rgba(0, 0, 0, 0.75);
+  min-height: 32px;
+  margin-bottom: 10px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.location-card .card-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+  margin-bottom: 8px;
+}
+
+.location-card .card-address {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*smaller Prev/Next */
+.section-controls button {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: #fff;
+  cursor: pointer;
+}
+.location-card {
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+.location-card:hover {
+  transform: translateY(-2px);
+}
+.location-card:active {
+  transform: scale(0.98);
+}
 .location-card.is-expanded {
-    transform: scale(1.05);
-    z-index: 10;
-  }
-  
-  
-  .modal-main {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    gap: 20px;
-  }
-  
-  .modal-image img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 14px;
-  }
-  .modal-content {
-    width: min(950px, 92vw);
-    max-height: 85vh;
-    overflow-y: auto;
-    border-radius: 18px;
-    padding: 28px;
-  }
-  
-  .modal-title {
-    margin: 0 0 16px;
-  }
-  
-  .modal-main {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 22px;
-    align-items: start;
-  }
-  
-  .modal-image img {
-    width: 100%;
-    height: 360px;
-    object-fit: cover;
-    border-radius: 14px;
-  }
-  
-  .modal-details p {
-    margin: 8px 0;
-  }
-  
-  .modal-desc {
-    margin-top: 0;
-    line-height: 1.5;
-  }
-  
-  .btn-save {
-    margin-top: 14px;
-    width: 100%;
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  /* Hide/show */
-.hidden {
-    display: none !important;
-  }
-  
-  /* Modal overlay container */
-  .modal {
-    position: fixed;
-    inset: 0;              
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-  
-  /* Dark backdrop  */
-  .modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-  }
+  transform: scale(1.05);
+  z-index: 10;
+}
 
-  
-  /* Close button */
-  .modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 2;
-  }
-  body.modal-open {
-    overflow: hidden;
-  }
-  
-  .modal {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  
-    /* white to see cards againts screeen */
-    opacity: 1;
-  }
-  
-  .modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    z-index: 0;              
-  }
-  
-  .modal-content {
-    position: relative;
-    z-index: 1;              
-    background: #fff;        
-    opacity: 1;              
-    width: min(950px, 92vw);
-    max-height: 85vh;
-    overflow-y: auto;
-    border-radius: 18px;
-    padding: 28px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-  }
-  
+.modal-main {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+.modal-content {
+  width: min(950px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.modal-title {
+  margin: 0 0 16px;
+}
+
+.modal-main {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.modal-details p {
+  margin: 8px 0;
+}
+
+.modal-desc {
+  margin-top: 0;
+  line-height: 1.5;
+}
+
+.btn-save {
+  margin-top: 14px;
+  width: 100%;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+/* Hide/show */
+.hidden {
+  display: none !important;
+}
+
+/* Modal overlay container */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Dark backdrop  */
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* Close button */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  /* white to see cards againts screeen */
+  opacity: 1;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 0;
+}
+
+.modal-content {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  opacity: 1;
+  width: min(950px, 92vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}

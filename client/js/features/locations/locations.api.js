@@ -7,7 +7,7 @@ export async function browseLocations({
   sort = "rating",
   order = "desc",
   page = 1,
-  limit = 20
+  limit = 20,
 } = {}) {
   const params = new URLSearchParams();
 
@@ -20,7 +20,7 @@ export async function browseLocations({
   params.set("limit", limit);
 
   console.log("browseLocations URL:", `${BASE_URL}/browse-locations?${params.toString()}`);
-  
+
   const res = await fetch(`${BASE_URL}/browse-locations?${params.toString()}`);
   if (!res.ok) throw new Error(`Failed to load locations: ${res.status}`);
   return res.json();
@@ -31,9 +31,7 @@ export async function viewLocation(id) {
   return res.json();
 }
 export async function listCategories() {
-  const res = await fetch(
-    "http://localhost:3000/api/categories/list-categories"
-  );
+  const res = await fetch("http://localhost:3000/api/categories/list-categories");
 
   if (!res.ok) {
     throw new Error(`Failed to load categories: ${res.status}`);

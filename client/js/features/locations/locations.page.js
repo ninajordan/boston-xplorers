@@ -6,11 +6,11 @@ let idToName = {};
 let nameToId = {};
 const state = {
   query: "",
-  category: "",       
+  category: "",
   sort: "rating",
   order: "desc",
   page: 1,
-  limit: 50
+  limit: 50,
 };
 async function browseItineraries() {
   const res = await fetch(`${ITINERARY_BASE_URL}/browse-itineraries`);
@@ -19,7 +19,9 @@ async function browseItineraries() {
 }
 
 async function viewItinerary(itineraryID) {
-  const res = await fetch(`${ITINERARY_BASE_URL}/view-itinerary/${encodeURIComponent(itineraryID)}`);
+  const res = await fetch(
+    `${ITINERARY_BASE_URL}/view-itinerary/${encodeURIComponent(itineraryID)}`,
+  );
   if (!res.ok) throw new Error(`Failed to view itinerary ${itineraryID}: ${res.status}`);
   return res.json();
 }
@@ -40,7 +42,7 @@ function extractItineraryName(it, id) {
   return it.itineraryName ?? it.name ?? `Itinerary ${id}`;
 }
 
-const sectionIndex = new Map(); 
+const sectionIndex = new Map();
 const PAGE_SIZE = 3;
 
 function $(sel) {
@@ -57,34 +59,27 @@ function normalizeLocationsPayload(payload) {
 function applyClientFilters(allLocations) {
   let list = [...allLocations];
 
+  // Search includes category name
+  if (state.query.trim()) {
+    const q = state.query.trim().toLowerCase();
 
-// Search includes category name
-if (state.query.trim()) {
-  const q = state.query.trim().toLowerCase();
+    list = list.filter((loc) => {
+      const catId = (loc.category || "").trim();
+      const catName = (idToName[catId] || "").toLowerCase();
 
-  list = list.filter((loc) => {
-    const catId = (loc.category || "").trim();                
-    const catName = (idToName[catId] || "").toLowerCase();    
+      const hay = [loc.locationName, loc.locationDescription, loc.address, catName]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
 
-    const hay = [
-      loc.locationName,
-      loc.locationDescription,
-      loc.address,
-      catName, 
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
+      return hay.includes(q);
+    });
+  }
 
-    return hay.includes(q);
-  });
-}
- 
-
-if (state.category) {
-  const selectedId = state.category.trim(); // "002"
-  list = list.filter((loc) => (loc.category || "").trim() === selectedId);
-}
+  if (state.category) {
+    const selectedId = state.category.trim(); // "002"
+    list = list.filter((loc) => (loc.category || "").trim() === selectedId);
+  }
 
   // Sort
   const dir = state.order === "asc" ? 1 : -1;
@@ -92,14 +87,10 @@ if (state.category) {
   if (state.sort === "rating") {
     list.sort((a, b) => (Number(a.starRating) - Number(b.starRating)) * dir);
   } else if (state.sort === "time") {
-    list.sort(
-      (a, b) => (Number(a.timeToComplete) - Number(b.timeToComplete)) * dir
-    );
+    list.sort((a, b) => (Number(a.timeToComplete) - Number(b.timeToComplete)) * dir);
   } else if (state.sort === "name") {
     list.sort(
-      (a, b) =>
-        String(a.locationName || "").localeCompare(String(b.locationName || "")) *
-        dir
+      (a, b) => String(a.locationName || "").localeCompare(String(b.locationName || "")) * dir,
     );
   }
 
@@ -110,33 +101,27 @@ function buildSections(locations) {
 
   for (const loc of locations) {
     const raw = loc.category || "miscellaneous";
-    const key =
-      typeof raw === "string" ? raw.trim() : "miscellaneous";
+    const key = typeof raw === "string" ? raw.trim() : "miscellaneous";
 
     if (!byCat.has(key)) byCat.set(key, []);
     byCat.get(key).push(loc);
   }
 
-  const titleCase = (s) =>
-    s.replace(/(^|\s|_|\-)\w/g, (m) => m.toUpperCase());
+  const titleCase = (s) => s.replace(/(^|\s|_|\-)\w/g, (m) => m.toUpperCase());
 
   const sections = [];
 
   for (const [categoryKey, items] of byCat.entries()) {
-
-    
     if (!sectionIndex.has(categoryKey)) {
       sectionIndex.set(categoryKey, 0);
     }
 
     let start = sectionIndex.get(categoryKey);
 
-   
     const maxStart = Math.max(0, items.length - PAGE_SIZE);
     start = Math.min(start, maxStart);
     sectionIndex.set(categoryKey, start);
 
-   
     const windowed = items.slice(start, start + PAGE_SIZE);
 
     sections.push({
@@ -144,7 +129,7 @@ function buildSections(locations) {
       categoryKey,
       items: windowed,
       total: items.length,
-      start
+      start,
     });
   }
 
@@ -214,44 +199,38 @@ async function loadAndRender() {
 
     const [payload, categoryResponse] = await Promise.all([
       browseLocations(state),
-      listCategories()
+      listCategories(),
     ]);
 
     const categories = categoryResponse?.categories ?? [];
-    
+
     idToName = Object.fromEntries(
-      categories.map((name, i) => [
-        String(i + 1).padStart(3, "0"),
-        name
-      ])
+      categories.map((name, i) => [String(i + 1).padStart(3, "0"), name]),
     );
-    
+
     nameToId = Object.fromEntries(
-      Object.entries(idToName).map(([id, name]) => [
-        name.toLowerCase(),
-        id
-      ])
+      Object.entries(idToName).map(([id, name]) => [name.toLowerCase(), id]),
     );
     const select = $("#filter-category");
-if (select) {
-  select.innerHTML = `<option value="">All</option>`;
-  categories.forEach((name, idx) => {
-    const id = String(idx + 1).padStart(3, "0");
-    const opt = document.createElement("option");
-    opt.value = id; 
-    opt.textContent = name.charAt(0).toUpperCase() + name.slice(1);
-    select.appendChild(opt);
-  });
-  select.value = state.category || "";
-}
+    if (select) {
+      select.innerHTML = `<option value="">All</option>`;
+      categories.forEach((name, idx) => {
+        const id = String(idx + 1).padStart(3, "0");
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+        select.appendChild(opt);
+      });
+      select.value = state.category || "";
+    }
 
     const allLocations = normalizeLocationsPayload(payload);
     let filtered = applyClientFilters(allLocations);
 
     console.log("BROWSE payload:", payload);
-console.log("allLocations length:", allLocations.length);
-console.log("filtered length:", filtered.length);
-console.log("sample location:", allLocations[0]);
+    console.log("allLocations length:", allLocations.length);
+    console.log("filtered length:", filtered.length);
+    console.log("sample location:", allLocations[0]);
     if (!filtered.length) {
       container.innerHTML = `<p style="padding:1rem;">No locations found.</p>`;
       return;
@@ -272,18 +251,19 @@ console.log("sample location:", allLocations[0]);
       sectionIndex.set(categoryKey, Math.max(0, current - PAGE_SIZE));
       renderSections(container, buildSections(filtered), onPrev, onNext, onCardClick, PAGE_SIZE);
     }
-    
+
     function onNext(categoryKey) {
-      const total = filtered.filter(l => (l.category || "miscellaneous").trim() === categoryKey).length;
-    
+      const total = filtered.filter(
+        (l) => (l.category || "miscellaneous").trim() === categoryKey,
+      ).length;
+
       const current = sectionIndex.get(categoryKey) || 0;
       const maxStart = Math.max(0, total - PAGE_SIZE);
-    
+
       sectionIndex.set(categoryKey, Math.min(current + PAGE_SIZE, maxStart));
       renderSections(container, buildSections(filtered), onPrev, onNext, onCardClick, PAGE_SIZE);
     }
 
-  
     renderSections(container, buildSections(filtered), onPrev, onNext, onCardClick, PAGE_SIZE);
   } catch (err) {
     console.error("Failed to load locations:", err);
@@ -305,39 +285,38 @@ export function initLocationsPage() {
     const btn = $("#btn-add-location");
     const cancel = $("#add-cancel");
     const form = $("#add-form");
-  
+
     const open = () => panel?.classList.remove("hidden");
     const close = () => panel?.classList.add("hidden");
-  
+
     btn?.addEventListener("click", () => {
       if (!panel) return;
       panel.classList.toggle("hidden");
     });
-  
+
     cancel?.addEventListener("click", close);
-  
+
     form?.addEventListener("submit", async (e) => {
       e.preventDefault();
-  
+
       const fd = new FormData(form);
       const payload = Object.fromEntries(fd.entries());
-  
-  
+
       if (payload.timeToComplete !== "") payload.timeToComplete = Number(payload.timeToComplete);
       else delete payload.timeToComplete;
-  
+
       try {
         const res = await fetch("http://localhost:3000/api/locations/create-location", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
-  
+
         if (!res.ok) {
           const text = await res.text();
           throw new Error(text || `Create failed: ${res.status}`);
         }
-  
+
         form.reset();
         close();
         sectionIndex.clear();
@@ -358,11 +337,9 @@ export function initLocationsPage() {
     loadAndRender();
   });
 
-  
   $("#filters-toggle")?.addEventListener("click", () => {
     $("#filters-panel")?.classList.toggle("hidden");
   });
-
 
   $("#filters-apply")?.addEventListener("click", () => {
     state.category = $("#filter-category")?.value || "";
@@ -378,7 +355,7 @@ export function initLocationsPage() {
     sectionIndex.clear();
 
     $("#filter-category") && ($("#filter-category").value = "");
-    (searchEl && (searchEl.value = ""));
+    searchEl && (searchEl.value = "");
 
     loadAndRender();
   });

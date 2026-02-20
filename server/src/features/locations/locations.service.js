@@ -3,15 +3,20 @@ import { getDatabase } from "../../db/db.js";
 async function getNextLocationId() {
   const db = getDatabase();
 
-  const lastItinerary = await db.collection('locations').find({}).sort({ locationID: -1 }).limit(1).toArray();
+  const lastItinerary = await db
+    .collection("locations")
+    .find({})
+    .sort({ locationID: -1 })
+    .limit(1)
+    .toArray();
   if (lastItinerary.length === 0) {
-      return '001' // Create first itinerary if no itineraries exist
+    return "001"; // Create first itinerary if no itineraries exist
   }
 
   const lastIdNumber = parseInt(lastItinerary[0].locationID, 10);
   const incrementedId = lastIdNumber + 1;
 
-  return incrementedId.toString().padStart(3, '0');
+  return incrementedId.toString().padStart(3, "0");
 }
 
 function parseSort(sort, order) {
@@ -83,7 +88,7 @@ export async function browseLocations({
   };
   const locations = await db
     .collection("locations")
-    .find(filter, { projection } )
+    .find(filter, { projection })
     .sort(sortObj)
     .skip(skip)
     .limit(safeLimit)
@@ -123,7 +128,7 @@ export async function getLocationById(id) {
 /**
  * CREATE new location
  * Used by: POST /api/locations/create-location
- * 
+ *
  */
 export async function createLocation(locationData) {
   try {
@@ -133,7 +138,7 @@ export async function createLocation(locationData) {
     locationData.locationID = locationID;
     const category = locationData.category;
 
-    const catInDB = await db.collection('categories').findOne({ categoryName: category });
+    const catInDB = await db.collection("categories").findOne({ categoryName: category });
     const categoryID = catInDB.categoryID;
     locationData.category = categoryID;
 
@@ -156,10 +161,9 @@ export async function updateLocation(id, updateData) {
   try {
     const db = getDatabase();
 
-    const result = await db.collection("locations").updateOne(
-      { locationID: id },
-      { $set: updateData }
-    );
+    const result = await db
+      .collection("locations")
+      .updateOne({ locationID: id }, { $set: updateData });
 
     if (result.matchedCount === 0) {
       return { status: 404, message: "location not found" };
@@ -182,10 +186,10 @@ export async function deleteLocation(id) {
   try {
     const db = getDatabase();
 
-    const locSlots = await db.collection('itinerarySlots').find({ cardID: id }).toArray();
+    const locSlots = await db.collection("itinerarySlots").find({ cardID: id }).toArray();
 
     if (locSlots.length > 0) {
-      return { status: 409, message: "location cant be deleted. Used in itineraries" }
+      return { status: 409, message: "location cant be deleted. Used in itineraries" };
     }
 
     const result = await db.collection("locations").deleteOne({ locationID: id });

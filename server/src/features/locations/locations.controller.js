@@ -1,27 +1,40 @@
-import * as locationsService from './locations.service.js'
+import * as locationsService from "./locations.service.js";
 
 /**
  * GET /api/locations/browse-locations
  * Returns list of all locations
  */
 export async function browseLocations(req, res) {
-    try {
-        const { query, category, neighborhood, sort='rating', order='desc', page=1, limit=20 } = req.query;
+  try {
+    const {
+      query,
+      category,
+      neighborhood,
+      sort = "rating",
+      order = "desc",
+      page = 1,
+      limit = 20,
+    } = req.query;
 
-        const results = await locationsService.browseLocations({
-          query, category, neighborhood, sort, order, page:Number(page), limit:Number(limit)
-        });
-        
-  
-      return res.status(200).json(results);
-    } catch (error) {
-      console.error('Error in browseLocations:', error);
-      return res.status(500).json({
-        error: 'Failed to fetch locations',
-        message: error.message
-      });
-    }
+    const results = await locationsService.browseLocations({
+      query,
+      category,
+      neighborhood,
+      sort,
+      order,
+      page: Number(page),
+      limit: Number(limit),
+    });
+
+    return res.status(200).json(results);
+  } catch (error) {
+    console.error("Error in browseLocations:", error);
+    return res.status(500).json({
+      error: "Failed to fetch locations",
+      message: error.message,
+    });
   }
+}
 
 /**
  * GET /api/locations/view-location/:id
@@ -35,17 +48,17 @@ export async function viewLocation(req, res) {
 
     if (location?.status === 404) {
       return res.status(404).json({
-        error: 'error location not found',
-        locationID: id
+        error: "error location not found",
+        locationID: id,
       });
     }
 
     res.status(200).json(location);
   } catch (error) {
-    console.error('Error occured viewing location: ', error);
+    console.error("Error occured viewing location: ", error);
     res.status(500).json({
-      error: 'Failed to get location',
-      message: error.message
+      error: "Failed to get location",
+      message: error.message,
     });
   }
 }
@@ -55,29 +68,27 @@ export async function viewLocation(req, res) {
  * Creates a new location
  */
 export async function createLocation(req, res) {
-    try {
-      const created = await locationsService.createLocation(req.body);
-  
-      
-      if (created?.status === 500) {
-        return res.status(500).json({
-          error: true,
-          message: created.message
-        });
-      }
-  
-      return res.status(201).json({
-        message: 'location created successfully',
-        location: created
-      });
-  
-    } catch (error) {
+  try {
+    const created = await locationsService.createLocation(req.body);
+
+    if (created?.status === 500) {
       return res.status(500).json({
         error: true,
-        message: error.message
+        message: created.message,
       });
     }
+
+    return res.status(201).json({
+      message: "location created successfully",
+      location: created,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: error.message,
+    });
   }
+}
 
 /**
  * PATCH /api/locations/update-location/:id
@@ -92,28 +103,28 @@ export async function updateLocation(req, res) {
     if (updated?.status === 404) {
       return res.status(404).json({
         error: true,
-        message: 'location not found',
-        locationID: id
+        message: "location not found",
+        locationID: id,
       });
     }
 
     if (updated?.status === 500) {
       return res.status(500).json({
         error: true,
-        message: updated.message || 'error updating location'
+        message: updated.message || "error updating location",
       });
     }
 
     res.status(200).json({
       error: false,
-      message: 'location updated successfully',
-      location: updated
+      message: "location updated successfully",
+      location: updated,
     });
   } catch (error) {
-    console.error('Error updating location: ', error);
+    console.error("Error updating location: ", error);
     res.status(500).json({
       error: true,
-      message: `Error updating location: ${error.message}`
+      message: `Error updating location: ${error.message}`,
     });
   }
 }
@@ -128,19 +139,15 @@ export async function deleteLocation(req, res) {
     const deleted = await locationsService.deleteLocation(id);
 
     if (deleted?.status === 404) {
-      return res.status(404).json({ error: true, message: 'location not found' });
+      return res.status(404).json({ error: true, message: "location not found" });
     }
 
     if (deleted?.status === 500) {
-      return res.status(500).json({ error: true, message: 'error deleting location' });
+      return res.status(500).json({ error: true, message: "error deleting location" });
     }
 
-    res.status(200).json({ error: false, message: 'location deleted successfully' });
+    res.status(200).json({ error: false, message: "location deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: true, message: `Error deleting location: ${error}` });
   }
 }
-  
-
-  
-

@@ -1,7 +1,6 @@
 export function renderLocations(locations) {
   const container =
-    document.querySelector("#locations-sections") ||
-    document.querySelector("#locations-container");
+    document.querySelector("#locations-sections") || document.querySelector("#locations-container");
 
   if (!container) {
     console.error("No render container found .");
@@ -26,15 +25,14 @@ export function renderLocations(locations) {
   });
 }
 
-  import { viewLocation } from "./locations.api.js";
+import { viewLocation } from "./locations.api.js";
 
 function dollars(priceLevel) {
-  if (!priceLevel) return ""; 
+  if (!priceLevel) return "";
   return "$".repeat(Math.max(1, Math.min(4, priceLevel)));
 }
 
-export function renderSections(container, sections, onPrev, onNext, onCardClick, pageSize
-) {
+export function renderSections(container, sections, onPrev, onNext, onCardClick, pageSize) {
   container.innerHTML = "";
 
   sections.forEach(({ title, categoryKey, items, start, total }) => {
@@ -70,10 +68,10 @@ export function renderCard(loc, onCardClick) {
   card.dataset.id = loc.locationID;
 
   const img = loc.locationImage || "";
-  const desc = (loc.locationDescription || "").slice(0, 90); 
+  const desc = (loc.locationDescription || "").slice(0, 90);
   const rating = loc.starRating ?? "—";
   const duration = loc.timeToComplete ? `${loc.timeToComplete} min` : "";
-  const price = dollars(loc.priceLevel); 
+  const price = dollars(loc.priceLevel);
 
   card.innerHTML = `
     <div class="card-top">
@@ -109,7 +107,6 @@ export function closeModal(modalEl) {
   document.body.classList.remove("modal-open");
 }
 
-
 export async function showLocationModal(modalBodyEl, location) {
   const full = await viewLocation(location.locationID);
 
@@ -139,4 +136,3 @@ export async function showLocationModal(modalBodyEl, location) {
     </div>
   `;
 }
-

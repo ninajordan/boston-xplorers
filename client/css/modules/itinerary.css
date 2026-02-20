@@ -1,657 +1,657 @@
 /* ==================== ITINERARY PAGE LAYOUT ==================== */
 .itinerary-page {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 20px;
-    padding: 20px;
-    height: calc(100vh - 80px);
-    max-width: 1400px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 80px);
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* ==================== BACK TO HOME BUTTON (BOSTON STYLE) ==================== */
 .back-to-home-btn {
-    width: 100%;
-    padding: 14px 20px;
-    background: #0C2340; /* Navy Blue */
-    color: white;
-    border: none;
-    border-bottom: 3px solid #C8102E; /* Boston Red accent */
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+  width: 100%;
+  padding: 14px 20px;
+  background: #0c2340; /* Navy Blue */
+  color: white;
+  border: none;
+  border-bottom: 3px solid #c8102e; /* Boston Red accent */
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .back-to-home-btn:hover {
-    background: #C8102E; /* Boston Red */
-    border-bottom-color: #0C2340; /* Navy Blue */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(200, 16, 46, 0.3);
+  background: #c8102e; /* Boston Red */
+  border-bottom-color: #0c2340; /* Navy Blue */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(200, 16, 46, 0.3);
 }
 
 .back-to-home-btn:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 /* ==================== LEFT SIDEBAR: LOCATIONS ==================== */
 .locations-sidebar {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .sidebar-header {
-    padding: 20px;
-    border-bottom: 1px solid #dee2e6;
+  padding: 20px;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .sidebar-header h2 {
-    margin: 0 0 15px 0;
-    font-size: 18px;
-    color: #0C2340;
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  color: #0c2340;
 }
 
 .search-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    font-size: 14px;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 .locations-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 15px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
 }
 
 /* Location Card (Draggable) */
 .location-card {
-    background: white;
-    border: 2px solid #dee2e6;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    cursor: grab;
-    transition: all 0.2s;
-    overflow: hidden;
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  cursor: grab;
+  transition: all 0.2s;
+  overflow: hidden;
 }
 
 .location-card:hover {
-    border-color: #C8102E;
-    box-shadow: 0 2px 8px rgba(200, 16, 46, 0.2);
+  border-color: #c8102e;
+  box-shadow: 0 2px 8px rgba(200, 16, 46, 0.2);
 }
 
 .location-card.dragging {
-    opacity: 0.5;
-    cursor: grabbing;
+  opacity: 0.5;
+  cursor: grabbing;
 }
 
 /* Image wrapper */
 .location-card-image-wrapper {
-    width: 100%;
-    height: 150px;
-    overflow: hidden;
-    background: #f8f9fa;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background: #f8f9fa;
 }
 
 .location-card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
 }
 
 .location-card:hover .location-card-image {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 /* Card content */
 .location-card-content {
-    padding: 12px;
+  padding: 12px;
 }
 
 .location-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 8px;
 }
 
 .location-card-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #0C2340;
-    margin: 0;
-    flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0c2340;
+  margin: 0;
+  flex: 1;
 }
 
 .location-card-time {
-    font-size: 12px;
-    color: #6C757D;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    white-space: nowrap;
+  font-size: 12px;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
 }
 
 .location-card-description {
-    font-size: 12px;
-    color: #6C757D;
-    margin: 8px 0;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  font-size: 12px;
+  color: #6c757d;
+  margin: 8px 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .location-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: #6C757D;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #6c757d;
 }
 
 .location-card-rating {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .location-card-neighborhood {
-    font-size: 11px;
-    color: #6C757D;
+  font-size: 11px;
+  color: #6c757d;
 }
 
 /* ==================== RIGHT COLUMN: ITINERARY ==================== */
 .itinerary-container {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 /* Row 1: Itinerary Name */
 /* ==================== ITINERARY HEADER WITH COPY BUTTON ==================== */
 .itinerary-header {
-    padding: 20px;
-    border-bottom: 2px solid #dee2e6;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  padding: 20px;
+  border-bottom: 2px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .itinerary-name-input {
-    flex: 1;
-    font-size: 24px;
-    font-weight: 600;
-    color: #0C2340;
-    border: none;
-    outline: none;
-    background: transparent;
+  flex: 1;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0c2340;
+  border: none;
+  outline: none;
+  background: transparent;
 }
 
 .copy-itinerary-btn {
-    background: #0C2340;
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-    flex-shrink: 0;
+  background: #0c2340;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .copy-itinerary-btn:hover {
-    background: #C8102E;
-    transform: scale(1.05);
+  background: #c8102e;
+  transform: scale(1.05);
 }
 
 .copy-itinerary-btn svg {
-    display: block;
+  display: block;
 }
 
 /* ==================== COPY MODAL ==================== */
 .copy-modal-content {
-    max-width: 500px;
-    padding: 0;
+  max-width: 500px;
+  padding: 0;
 }
 
 .copy-form {
-    padding: 30px;
+  padding: 30px;
 }
 
 .copy-form-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #0C2340;
-    margin: 0 0 10px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0c2340;
+  margin: 0 0 10px 0;
 }
 
 .copy-form-description {
-    font-size: 14px;
-    color: #6C757D;
-    margin: 0 0 25px 0;
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0 0 25px 0;
 }
 
 .form-group {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: #0C2340;
-    margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0c2340;
+  margin-bottom: 8px;
 }
 
 .form-input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #dee2e6;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .form-input:focus {
-    outline: none;
-    border-color: #C8102E;
+  outline: none;
+  border-color: #c8102e;
 }
 
 .copy-submit-btn {
-    width: 100%;
-    padding: 14px;
-    background: #C8102E;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+  width: 100%;
+  padding: 14px;
+  background: #c8102e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .copy-submit-btn:hover {
-    background: #9B0C23;
+  background: #9b0c23;
 }
 
 .copy-submit-btn:disabled {
-    background: #dee2e6;
-    cursor: not-allowed;
+  background: #dee2e6;
+  cursor: not-allowed;
 }
 
 /* Row 2: Date Navigation */
 .date-navigation {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 20px;
-    border-bottom: 1px solid #dee2e6;
-    background: #F8F9FA;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border-bottom: 1px solid #dee2e6;
+  background: #f8f9fa;
 }
 
 .date-nav-btn {
-    background: #0C2340;
-    color: white;
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
+  background: #0c2340;
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
 }
 
 .date-nav-btn:hover {
-    background: #C8102E;
+  background: #c8102e;
 }
 
 .date-nav-btn:disabled {
-    background: #dee2e6;
-    cursor: not-allowed;
+  background: #dee2e6;
+  cursor: not-allowed;
 }
 
 .current-date {
-    font-size: 20px;
-    font-weight: 600;
-    color: #0C2340;
-    margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #0c2340;
+  margin: 0;
 }
 
 /* Row 3: Timeline (Scrollable) */
 .itinerary-timeline {
-    flex: 1;
-    overflow-y: auto;
-    padding: 20px;
-    position: relative;
-    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  position: relative;
+  background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
 }
 
 /* Hour Slots */
 .time-slot {
-    position: relative;
-    height: 80px;
-    border-bottom: 1px solid #dee2e6;
-    display: flex;
-    align-items: start;
-    padding-left: 80px;
-    transition: background 0.2s;
+  position: relative;
+  height: 80px;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  align-items: start;
+  padding-left: 80px;
+  transition: background 0.2s;
 }
 
 .time-slot:hover {
-    background: #f8f9fa;
+  background: #f8f9fa;
 }
 
 .time-slot.drop-target {
-    background: rgba(200, 16, 46, 0.1);
-    border: 2px dashed #C8102E;
+  background: rgba(200, 16, 46, 0.1);
+  border: 2px dashed #c8102e;
 }
 
 .time-label {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #6C757D;
-    width: 60px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6c757d;
+  width: 60px;
 }
 
 .time-slot-content {
-    flex: 1;
-    position: relative;
-    min-height: 60px;
+  flex: 1;
+  position: relative;
+  min-height: 60px;
 }
 
 /* Itinerary Card (Dropped Item) */
 .itinerary-card {
-    position: absolute;
-    left: 0;
-    right: 0;
-    background: white;
-    border: 2px solid #C8102E;
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.2s;
-    z-index: 10;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #c8102e;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
 }
 
 .itinerary-card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .itinerary-card.new-item {
-    border-color: #F4A460;
-    background: #FFF9F0;
+  border-color: #f4a460;
+  background: #fff9f0;
 }
 
 .itinerary-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 8px;
 }
 
 .itinerary-card-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #0C2340;
-    flex: 1;
-    margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0c2340;
+  flex: 1;
+  margin: 0;
 }
 
 .remove-card-btn {
-    background: #DC3545;
-    color: white;
-    border: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-    flex-shrink: 0;
+  background: #dc3545;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
 }
 
 .remove-card-btn:hover {
-    background: #C82333;
+  background: #c82333;
 }
 
 .itinerary-card-time-range {
-    font-size: 14px;
-    font-weight: 600;
-    color: #C8102E;
-    margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c8102e;
+  margin-bottom: 8px;
 }
 
 .itinerary-card-rating {
-    font-size: 13px;
-    color: #F4A460;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  font-size: 13px;
+  color: #f4a460;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .itinerary-card-address {
-    font-size: 12px;
-    color: #6C757D;
-    line-height: 1.4;
+  font-size: 12px;
+  color: #6c757d;
+  line-height: 1.4;
 }
 
 /* Row 4: Save Button */
 .itinerary-footer {
-    padding: 20px;
-    border-top: 2px solid #dee2e6;
-    background: #F8F9FA;
+  padding: 20px;
+  border-top: 2px solid #dee2e6;
+  background: #f8f9fa;
 }
 
 .save-itinerary-btn {
-    width: 100%;
-    padding: 15px;
-    background: #C8102E;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
+  width: 100%;
+  padding: 15px;
+  background: #c8102e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .save-itinerary-btn:hover {
-    background: #9B0C23;
+  background: #9b0c23;
 }
 
 .save-itinerary-btn:disabled {
-    background: #dee2e6;
-    cursor: not-allowed;
+  background: #dee2e6;
+  cursor: not-allowed;
 }
 
 /* ==================== LOCATION DETAIL MODAL ==================== */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal.hidden {
-    display: none;
+  display: none;
 }
 
 .modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-    position: relative;
-    background: white;
-    border-radius: 12px;
-    max-width: 600px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    z-index: 1001;
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
 }
 
 .modal-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: #DC3545;
-    color: white;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
 }
 
 .modal-close:hover {
-    background: #C82333;
+  background: #c82333;
 }
 
 .location-detail {
-    padding: 30px;
+  padding: 30px;
 }
 
 .location-detail-image {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 20px;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
 .location-detail-title {
-    font-size: 28px;
-    font-weight: 600;
-    color: #0C2340;
-    margin: 0 0 15px 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #0c2340;
+  margin: 0 0 15px 0;
 }
 
 .location-detail-meta {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .location-detail-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #6C757D;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #6c757d;
 }
 
 .location-detail-description {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #1A1A1A;
-    margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  margin-bottom: 20px;
 }
 
 .location-detail-address {
-    font-size: 14px;
-    color: #6C757D;
-    padding: 12px;
-    background: #F8F9FA;
-    border-radius: 6px;
-    margin-bottom: 20px;
+  font-size: 14px;
+  color: #6c757d;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 20px;
 }
 
 .location-detail-rating {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 18px;
-    color: #F4A460;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  color: #f4a460;
 }
 
 /* ==================== UTILITY CLASSES ==================== */
 .loading {
-    text-align: center;
-    padding: 40px;
-    color: #6C757D;
+  text-align: center;
+  padding: 40px;
+  color: #6c757d;
 }
 
 .error {
-    text-align: center;
-    padding: 40px;
-    color: #DC3545;
+  text-align: center;
+  padding: 40px;
+  color: #dc3545;
 }
 
 /* Scrollbar Styling */
 .locations-list::-webkit-scrollbar,
 .itinerary-timeline::-webkit-scrollbar,
 .modal-content::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .locations-list::-webkit-scrollbar-track,
 .itinerary-timeline::-webkit-scrollbar-track,
 .modal-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 .locations-list::-webkit-scrollbar-thumb,
 .itinerary-timeline::-webkit-scrollbar-thumb,
 .modal-content::-webkit-scrollbar-thumb {
-    background: #C8102E;
-    border-radius: 4px;
+  background: #c8102e;
+  border-radius: 4px;
 }
 
 .locations-list::-webkit-scrollbar-thumb:hover,
 .itinerary-timeline::-webkit-scrollbar-thumb:hover,
 .modal-content::-webkit-scrollbar-thumb:hover {
-    background: #9B0C23;
+  background: #9b0c23;
 }

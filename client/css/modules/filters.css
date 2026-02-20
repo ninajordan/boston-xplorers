@@ -1,73 +1,85 @@
-.controls{
-    display:flex;
-    gap:12px;
-    align-items:center;
-    padding:16px;
-    background:#eef1f6;
-  }
-  
-  #filter-search{
-    flex:1;
-    padding:12px 14px;
-    border-radius:10px;
-    border:1px solid #cfd6e3;
-    font-size:16px;
-  }
-  
-  #filters-toggle{
-    padding:10px 14px;
-    border-radius:10px;
-    border:0;
-    background:#0f2c47;
-    color:#fff;
-    cursor:pointer;
-  }
-  
-  .filters-panel{
-    position:absolute;
-    margin-top:10px;
-    right:16px;
-    background:white;
-    border:1px solid #d6dde8;
-    border-radius:12px;
-    padding:12px;
-    width:320px;
-    box-shadow:0 8px 22px rgba(0,0,0,0.12);
-  }
-  
-  .hidden{ display:none; }
-  
-  .filters-panel label{
-    display:block;
-    font-size:13px;
-    margin:8px 0;
-  }
-  
-  .filters-panel input, .filters-panel select{
-    width:100%;
-    padding:10px;
-    border-radius:10px;
-    border:1px solid #cfd6e3;
-  }
-  
-  .filters-actions{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
-  }
-  /* Make dropdown anchor to the Filters button */
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+  background: #eef1f6;
+}
+
+#filter-search {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #cfd6e3;
+  font-size: 16px;
+}
+
+#filters-toggle {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 0;
+  background: #0f2c47;
+  color: #fff;
+  cursor: pointer;
+}
+
+.filters-panel {
+  position: absolute;
+  margin-top: 10px;
+  right: 16px;
+  background: white;
+  border: 1px solid #d6dde8;
+  border-radius: 12px;
+  padding: 12px;
+  width: 320px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.hidden {
+  display: none;
+}
+
+.filters-panel label {
+  display: block;
+  font-size: 13px;
+  margin: 8px 0;
+}
+
+.filters-panel input,
+.filters-panel select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #cfd6e3;
+}
+
+.filters-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+/* Make dropdown anchor to the Filters button */
 .filters {
-    position: relative;
-  }
-  
-  /* Panel */
-  .filters-panel {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    width: 320px;
-    z-index: 50;
-  }
-  .filters { position: relative; }
-.filters-panel { position: absolute; right: 0; top: calc(100% + 10px); z-index: 50; }
-.hidden { display: none; }
+  position: relative;
+}
+
+/* Panel */
+.filters-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 320px;
+  z-index: 50;
+}
+.filters {
+  position: relative;
+}
+.filters-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 50;
+}
+.hidden {
+  display: none;
+}

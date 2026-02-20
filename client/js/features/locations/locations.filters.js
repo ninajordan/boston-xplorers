@@ -1,8 +1,4 @@
-export function setupFilters({
-  onSearchChange,
-  onApplyFilters,
-  onClearFilters,
-}) {
+export function setupFilters({ onSearchChange, onApplyFilters, onClearFilters }) {
   const search = document.querySelector("#locations-search");
   const toggle = document.querySelector("#filters-toggle");
   const menu = document.querySelector("#filters-menu");
