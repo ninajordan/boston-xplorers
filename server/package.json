@@ -1,23 +1,27 @@
 {
+    "name": "boston-xplorers-server",
+    "version": "1.0.0",
+    "description": "Backend for Boston Xplorers trip itinerary app",
+    "type": "module",
+    "main": "server.js",
     "scripts": {
-      "lint": "eslint .",
-      "lint:fix": "eslint . --fix",
-      "format": "prettier . --write",
-      "format:check": "prettier . --check"
+      "start": "node server.js",
+      "dev": "node_modules/nodemon/bin/node.js server.js",
+      "db:setup": "node_modules/nodemon/bin/node.js src/db/setup.js"
     },
+    "keywords": ["boston", "travel", "itinerary"],
+    "author": "Kunj and Nina",
+    "license": "MIT",
     "dependencies": {
-      "cors": "^2.8.6",
-      "dotenv": "^17.2.4",
-      "eslint": "^10.0.0",
-      "eslint-config-prettier": "^10.1.8",
-      "express": "^5.2.1",
-      "mongodb": "^7.1.0",
-      "nodemon": "^3.1.11",
-      "prettier": "^3.8.1"
+      "dotenv": "^16.3.1",
+      "express": "^4.18.2",
+      "mongodb": "^6.3.0",
+      "cors": "^2.8.5"
     },
     "devDependencies": {
-      "@eslint/js": "^10.0.1",
-      "eslint-plugin-html": "^8.1.4",
-      "globals": "^17.3.0"
+      "nodemon": "^3.0.2"
+    },
+    "engines": {
+      "node": ">=18.0.0"
     }
   }
