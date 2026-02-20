@@ -1,0 +1,341 @@
+.app-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    background: #0f2c47;
+    color: white;
+    padding: 18px 14px;
+  }
+  
+  .main {
+    background: #eef1f6;
+    padding: 18px;
+  }
+  .section-controls button:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .sidebar-actions {
+    margin-top: 24px;
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  
+  .sidebar-btn {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .sidebar-btn.primary {
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.25);
+  }
+  
+  .sidebar-btn.ghost {
+    background: transparent;
+  }
+  
+  .add-panel {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  
+  .panel-title {
+    margin: 0 0 10px 0;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .add-form input,
+  .add-form select,
+  .add-form textarea {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 14px;
+  }
+  
+  .add-form textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+  
+  .add-form input::placeholder,
+  .add-form textarea::placeholder {
+    color: rgba(255,255,255,0.6);
+  }
+  
+  .panel-actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .sidebar-actions {
+    margin-top: 24px;
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  
+  .sidebar-btn {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .sidebar-btn.primary {
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.25);
+  }
+  
+  .sidebar-btn.ghost {
+    background: transparent;
+  }
+  
+  .add-panel {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  
+  .panel-title {
+    margin: 0 0 10px 0;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .add-form input,
+  .add-form select,
+  .add-form textarea {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 14px;
+  }
+  
+  .add-form textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+  
+  .add-form input::placeholder,
+  .add-form textarea::placeholder {
+    color: rgba(255,255,255,0.6);
+  }
+  
+  .panel-actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+ 
+
+.sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 2rem;
+  }
+  
+  .sidebar-btn {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 14px;
+  
+    background: #b3202a;        /* same red as cards */
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+  
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  
+    transition: all 0.2s ease;
+  }
+  
+  /* remove link underline */
+  .sidebar-btn,
+  .sidebar-btn:visited,
+  .sidebar-btn:link {
+    text-decoration: none;
+    color: white;
+  }
+  
+  
+  .sidebar-btn:hover {
+    background: #8f1a22;
+    transform: translateY(-1px);
+  }
+  
+  /* clicky */
+  .sidebar-btn:active {
+    transform: translateY(0);
+  }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-actions {
+    margin-top: auto;
+  }
+  .hidden { display: none !important; }
+  .app-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+  .app-header {
+    margin-bottom: 18px;
+  }
+  
+  .app-header h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: #0f2c47;
+  }
+  /* Sidebar button row near the top */
+.sidebar-actions.top-actions {
+    margin-top: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* pill style for <button> and <a> */
+  .sidebar-btn.sidebar-btn--pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  
+    width: 100%;
+    padding: 12px 14px;
+  
+    border: none;
+    border-radius: 999px; /* pill */
+    text-decoration: none;
+  
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  
+    background: #d11a2a; /* red */
+    color: white;
+  
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    transition: transform 140ms ease, filter 140ms ease;
+    cursor: pointer;
+  }
+  
+  .sidebar-btn.sidebar-btn--pill:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+  
+  .sidebar-btn.sidebar-btn--pill:active {
+    transform: translateY(0px) scale(0.99);
+  }
+  
+ 
+  .sidebar-btn.sidebar-btn--pill:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .sidebar {
+    padding-top: 18px; 
+  }
+
+.sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 0;
+    border-top: none;
+  }
+  
+  .sidebar-actions .sidebar-btn,
+  .sidebar-actions a.sidebar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  
+    width: 100%;
+    padding: 12px 14px;
+  
+    border-radius: 999px;      /* pill */
+    border: none;
+  
+    background: #d11a2a;       /* red */
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  
+    text-decoration: none;
+    cursor: pointer;
+  
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    transition: transform 140ms ease, filter 140ms ease;
+  }
+  
+  .sidebar-actions .sidebar-btn:hover,
+  .sidebar-actions a.sidebar-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+  
+  .sidebar-actions .sidebar-btn:active,
+  .sidebar-actions a.sidebar-btn:active {
+    transform: translateY(0px) scale(0.99);
+  }

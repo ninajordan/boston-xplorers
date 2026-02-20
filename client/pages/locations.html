@@ -1,1 +1,159 @@
-<!-- Locations page markup -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boston Xplorers — View Boston from the Eyes of a Local 🫖</title>
+
+  <link rel="stylesheet" href="/css/modules/layout.css" />
+  <link rel="stylesheet" href="/css/modules/header.css" />
+  <link rel="stylesheet" href="/css/modules/imputs.css" />
+  <link rel="stylesheet" href="/css/modules/filters.css" />
+  <link rel="stylesheet" href="/css/modules/cards.css" />
+  <link rel="stylesheet" href="/css/modules/itinerary.css" />
+</head>
+
+<body>
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <h2>Popular Itineraries</h2>
+    
+      <nav id="itinerary-list" class="itinerary-list">
+        
+      </nav>
+
+      <div class="sidebar-actions">
+        <!-- Sidebar + Location button -->
+        <button id="btn-add-location" type="button" class="sidebar-btn primary">
+          + Add Location
+        </button>
+
+        <!-- Sidebar Go to Itinerary button -->
+        <button id="btn-go-itinerary" class="sidebar-btn primary" href="./itineraries.html">
+          Go to Itinerary
+        </button>
+
+        <!-- Collapsible Add Location panel -->
+        <div id="add-panel" class="add-panel hidden">
+          <h3 class="panel-title">Add a Location</h3>
+
+          <form id="add-form" class="add-form">
+            <input name="locationName" placeholder="Location name" required />
+            <input name="address" placeholder="Address" required />
+
+            <select name="category" required>
+              <option value="">Select category</option>
+              <option value="restaurants">Restaurants</option>
+              <option value="parks">Parks</option>
+              <option value="museums">Museums</option>
+              <option value="universities">Universities</option>
+              <option value="natural attractions">Natural Attractions</option>
+              <option value="man-made">Man-made</option>
+              <option value="family attractions">Family Attractions</option>
+              <option value="couple attractions">Couple Attractions</option>
+              <option value="miscellaneous">Miscellaneous</option>
+              <option value="streets">Streets</option>
+              <option value="shopping">Shopping</option>
+              <option value="hiking">Hiking</option>
+              <option value="historical">Historical</option>
+              <option value="beaches">Beaches</option>
+            </select>
+
+            <input name="starRating" type="number" min="0" max="5" step="0.1" placeholder="Rating (0–5)" />
+
+            <!-- Hours-only UI  -->
+            <select name="timeToComplete">
+              <option value="">Duration</option>
+              <option value="60">1 hour</option>
+              <option value="120">2 hours</option>
+              <option value="180">3 hours</option>
+              <option value="240">4 hours</option>
+              <option value="300">5 hours</option>
+            </select>
+
+            <input name="neighborhood" placeholder="Neighborhood (optional)" />
+            <input name="locationImage" placeholder="Image URL (optional)" />
+
+            <textarea name="locationDescription" placeholder="Description" required></textarea>
+
+            <div class="panel-actions">
+              <button type="submit" class="sidebar-btn primary">Create</button>
+              <button id="add-cancel" type="button" class="sidebar-btn ghost">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <header class="app-header">
+        <div class="brand">
+          <h1>Boston Xplorers 🫖 ⛵ 🌊 View Boston from the Eyes of a Local</h1>
+        </div>
+      </header>
+      
+
+      <!-- search and filter logic -->
+      <div class="topbar">
+        <input
+          id="filter-search"
+          type="text"
+          placeholder="Search locations, categories, or keywords..."
+          autocomplete="off"
+        />
+
+        <div class="filters">
+          <button id="filters-toggle" type="button">Filters ▾</button>
+
+          <div id="filters-panel" class="filters-panel hidden">
+            <label>
+              Category
+              <select id="filter-category"></select>
+            </label>
+
+
+            <label>
+              Sort
+              <select id="filter-sort">
+                <option value="rating">Rating</option>
+                <option value="time">Time</option>
+                <option value="name">Name</option>
+              </select>
+            </label>
+
+            <label>
+              Order
+              <select id="filter-order">
+                <option value="desc">Desc</option>
+                <option value="asc">Asc</option>
+              </select>
+            </label>
+
+            <div class="filters-actions">
+              <button id="filters-apply" type="button">Apply</button>
+              <button id="filters-clear" type="button">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category sections -->
+      <div id="locations-sections"></div>
+    </main>
+  </div>
+
+  
+  <div id="location-modal" class="modal hidden">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button id="modal-close" class="modal-close" type="button">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+
+  <script type="module" src="../js/features/locations/locations.page.js"></script>
+</body>
+</html>

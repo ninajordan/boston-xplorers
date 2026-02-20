@@ -19,26 +19,17 @@
   
   
   /**
-   * Supports increments of  (e.g., 30, 60, 90)
-   * can do a string simple converson "90" to 90
+   * Supports increments of 1 hour / 60 mins 
+   * 
    * 
    */
-  function isValidTimeToComplete(v) {
-    // Allow undefined / null (optional field)
-    if (v === undefined || v === null || v === "") return true;
+  function isValidTimeToComplete(timeToComplete) {
+    if (timeToComplete === undefined || timeToComplete === null || timeToComplete === "") return true;
   
-    // If number of minutes
-    if (typeof v === "number") {
-      return Number.isFinite(v) && v > 0 && v % 30 === 0;
-    }
+    const n = Number(timeToComplete);
+    if (!Number.isFinite(n)) return false;
   
-    // If string that can be converted to number like "90"
-    if (typeof v === "string" && v.trim() !== "" && !Number.isNaN(Number(v))) {
-      const n = Number(v);
-      return Number.isFinite(n) && n > 0 && n % 30 === 0;
-    }
-  
-    return false;
+    return n > 0 && n % 60 === 0; // ✅ hours only
   }
   
   function sendValidationError(res, errors) {
@@ -86,7 +77,7 @@
     }
   
     if (!isValidTimeToComplete(timeToComplete)) {
-      errors.push("timeToComplete must be in 30-minute increments (e.g., 30, 60, 90...).");
+      errors.push("timeToComplete must be in 60-minute increments (e.g., 60, 120, 180...).");
     } else if (timeToComplete !== undefined && timeToComplete !== null && timeToComplete !== "") {
       // normalize to number if it's a numeric string
       if (typeof timeToComplete === "string" && !Number.isNaN(Number(timeToComplete))) {
@@ -151,7 +142,7 @@
   
     if ("timeToComplete" in body) {
       if (!isValidTimeToComplete(body.timeToComplete)) {
-        errors.push("timeToComplete must be in 30-minute increments (e.g., 30, 60, 90...).");
+        errors.push("timeToComplete must be in 60-minute increments (e.g., 60, 120, 180...).");
       } else if (typeof body.timeToComplete === "string" && !Number.isNaN(Number(body.timeToComplete))) {
         body.timeToComplete = Number(body.timeToComplete);
       }
