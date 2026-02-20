@@ -295,7 +295,7 @@ function setupEventListeners() {
         // Clear previous timeout
         clearTimeout(searchTimeout);
         
-        // Set new timeout - API call after 500ms of no typing
+        //  API call after 500ms of no typing
         searchTimeout = setTimeout(async () => {
             console.log('🔍 Searching for:', searchTerm);
             
@@ -305,13 +305,12 @@ function setupEventListeners() {
                 console.log(`✅ Found ${locations.length} locations`);
                 render.renderLocationCards(locations, locationsListEl);
                 
-                // Re-initialize drag and drop for new cards
                 initDragAndDrop(locationsListEl, timelineEl, handleDrop);
             } catch (error) {
                 render.showError(locationsListEl, 'Search failed');
                 console.error('Error searching locations:', error);
             }
-        }, 500); // 500ms debounce
+        }, 500);
     });
     
     window.addEventListener('showLocationDetail', async (e) => {
