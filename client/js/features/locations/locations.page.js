@@ -1,6 +1,6 @@
 import { browseLocations, listCategories } from "./locations.api.js";
 import { renderSections, showLocationModal, openModal, closeModal } from "./locations.render.js";
-const ITINERARY_BASE_URL = "http://localhost:3000/api/itinerary";
+const ITINERARY_BASE_URL = "https://boston-xplorers-production.up.railway.app/api/itinerary";
 
 let idToName = {};
 let nameToId = {};
@@ -408,7 +408,7 @@ export function initLocationsPage() {
       else delete payload.timeToComplete;
 
       try {
-        const res = await fetch("http://localhost:3000/api/locations/create-location", {
+        const res = await fetch("https://boston-xplorers-production.up.railway.app/api/locations/create-location", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),

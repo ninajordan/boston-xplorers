@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api";
+const API_BASE = 'https://boston-xplorers-production.up.railway.app/api';
 
 /**
  * Fetch all locations with optional search query
